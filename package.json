@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/HazAT/pi-subagents"
+    "url": "https://github.com/HazAT/pi-interactive-subagents"
   },
   "author": "HazAT",
   "license": "MIT"
