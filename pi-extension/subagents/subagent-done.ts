@@ -1,5 +1,6 @@
 /**
  * Extension loaded into sub-agents.
+ * - Shows agent identity in the status bar (always visible)
  * - Shows available tools as a styled widget above the editor (toggle with Ctrl+J)
  * - Provides a `subagent_done` tool for autonomous agents to self-terminate
  */
@@ -11,6 +12,10 @@ export default function (pi: ExtensionAPI) {
   let toolNames: string[] = [];
   let denied: string[] = [];
   let expanded = false;
+
+  // Read subagent identity from env vars (set by parent orchestrator)
+  const subagentName = process.env.PI_SUBAGENT_NAME ?? "";
+  const subagentAgent = process.env.PI_SUBAGENT_AGENT ?? "";
 
   function renderWidget(ctx: { ui: { setWidget: Function } }, theme: any) {
     ctx.ui.setWidget(
@@ -61,7 +66,7 @@ export default function (pi: ExtensionAPI) {
     );
   }
 
-  // Show collapsed widget on session start
+  // Show widget + status bar on session start
   pi.on("session_start", (_event, ctx) => {
     const tools = pi.getAllTools();
     toolNames = tools.map((t) => t.name).sort();
@@ -69,6 +74,12 @@ export default function (pi: ExtensionAPI) {
       .split(",")
       .map((s) => s.trim())
       .filter(Boolean);
+
+    // Set agent identity in the status bar — always visible
+    const label = subagentAgent || subagentName;
+    if (label) {
+      ctx.ui.setStatus("subagent", `⚡ subagent: ${label}`);
+    }
 
     renderWidget(ctx, null);
   });

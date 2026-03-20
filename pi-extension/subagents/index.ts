@@ -326,10 +326,16 @@ async function runSubagent(
       }
     }
 
-    // Build env prefix for denied tools (denySet already resolved above for tab title check)
-    const envPrefix = denySet.size > 0
-      ? `PI_DENY_TOOLS=${shellEscape([...denySet].join(","))} `
-      : "";
+    // Build env prefix: denied tools + subagent identity
+    const envParts: string[] = [];
+    if (denySet.size > 0) {
+      envParts.push(`PI_DENY_TOOLS=${shellEscape([...denySet].join(","))}`);
+    }
+    envParts.push(`PI_SUBAGENT_NAME=${shellEscape(params.name)}`);
+    if (params.agent) {
+      envParts.push(`PI_SUBAGENT_AGENT=${shellEscape(params.agent)}`);
+    }
+    const envPrefix = envParts.join(" ") + " ";
 
     // Write task to an artifact file and pass via @file.
     // pi combines @file text and CLI messages into a single initial user message,
