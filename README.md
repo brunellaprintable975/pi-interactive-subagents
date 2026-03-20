@@ -266,7 +266,7 @@ The frontmatter configures the agent defaults. The body becomes the system promp
 | `description` | string | Shown in `subagents_list` output |
 | `model` | string | Default model (e.g. `anthropic/claude-sonnet-4-6`) |
 | `thinking` | string | Thinking level: `minimal`, `medium`, `high` |
-| `tools` | string | Comma-separated builtin tools (e.g. `read, bash, edit, write`) |
+| `tools` | string | Comma-separated **native pi tools only**: `read`, `bash`, `edit`, `write`, `grep`, `find`, `ls`. Non-native tool names are silently ignored. To control extension tools, use `deny-tools` or `spawning` instead. |
 | `skills` | string | Comma-separated skill names to auto-load |
 | `spawning` | boolean | Set `false` to deny all subagent-spawning tools |
 | `deny-tools` | string | Comma-separated extension tool names to deny |
@@ -278,7 +278,9 @@ The frontmatter configures the agent defaults. The body becomes the system promp
 
 By default, every sub-agent has access to all extension tools — including the ability to spawn further sub-agents. This can lead to unbounded recursion and wasted tokens (a researcher spawning another researcher, a worker spawning workers, etc.).
 
-Two frontmatter fields control which tools are available in a sub-agent session:
+> **Important:** The `tools` field in agent frontmatter only controls **native pi builtins** (`read`, `bash`, `edit`, `write`, `grep`, `find`, `ls`). It maps to pi's `--tools` CLI flag. Putting extension tool names (like `subagent`, `set_tab_title`, etc.) in `tools` has no effect — they are silently filtered out. To remove extension tools from a sub-agent, use `spawning: false` and/or `deny-tools` instead.
+
+Two frontmatter fields control which **extension** tools are available in a sub-agent session:
 
 ### `spawning: false`
 
